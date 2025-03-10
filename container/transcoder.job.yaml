@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: transcoder-job
+spec:
+  template:
+    metadata:
+      labels:
+        app: transcoder
+    spec:
+      restartPolicy: Never # Ensures the job runs only once
+      containers:
+        - name: transcoder
+          image: khoimd/transcoder-job # Replace with your actual image
+          env:
+            - name: S3_ENDPOINT
+              value: 'http://host.docker.internal:9000'
+            - name: S3_ACCESS_KEY_ID
+              value: 'admin'
+            - name: S3_SECRET_ACCESS_KEY
+              value: 'admin@2024' # Replace with your actual secret
+          volumeMounts:
+            - name: transcoder-storage
+              mountPath: /output
+      volumes:
+        - name: transcoder-storage
+          emptyDir: {} # Temporary storage that gets deleted when the job ends
