@@ -7,13 +7,16 @@ import redisConfig from 'src/redis/config/redis.config';
 import loggerFactory from './logger-factory';
 import appConfig from 'src/config/app.config';
 import { BackgroundModule } from 'src/background/background.module';
-import { RedisListenerModule } from 'src/redis/redis-listerner.module';
+import { KafkaModule } from '@/kafka';
+import kafkaConfig from 'src/kafka/config/kafka.config';
+import { ConsumerModule } from 'src/consumers/consumer.module';
+import minioConfig from 'src/libs/minio/config/minio.config';
 
 function generateModulesSet(): ModuleMetadata['imports'] {
   const imports: ModuleMetadata['imports'] = [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [redisConfig, appConfig],
+      load: [redisConfig, appConfig, kafkaConfig, minioConfig],
       envFilePath: ['.env'],
     }),
   ];
@@ -50,7 +53,8 @@ function generateModulesSet(): ModuleMetadata['imports'] {
     bullModule,
     loggerModule,
     BackgroundModule,
-    RedisListenerModule,
+    KafkaModule,
+    ConsumerModule,
   ];
 
   return imports.concat(customModules);

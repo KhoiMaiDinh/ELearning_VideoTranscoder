@@ -16,6 +16,18 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/kafka": ["src/kafka"],
+      "@/kafka/*": ["src/kafka/*"],
+      "@/config": ["src/config"],
+      "@/config/*": ["src/config/*"],
+      "@/utils": ["src/utils"],
+      "@/utils/*": ["src/utils/*"],
+      "@/constants": ["src/constants"],
+      "@/constants/*": ["src/constants/*"],
+      "@/exceptions": ["src/exceptions"],
+      "@/exceptions/*": ["src/exceptions/*"]
+    }
   }
 }
