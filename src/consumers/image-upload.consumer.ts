@@ -15,9 +15,10 @@ export class ImageUploadConsumer {
 
   @EventPattern(KafkaTopic.IMAGE_UPLOAD)
   async handleImageUploadMessage(@Payload() message: any) {
+    console.log(message);
     const event: MinioEvent = message;
     // Ignore non-s3:ObjectCreated:Put events
-    if (event.Records[0].eventName !== 's3:ObjectCreated:Put') {
+    if (event.Records[0].eventName !== 's3:ObjectCreated:Post') {
       return;
     }
 

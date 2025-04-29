@@ -18,7 +18,7 @@ export class VideoUploadConsumer {
   @EventPattern(KafkaTopic.VIDEO_UPLOAD)
   handleVideoUploadMessage(@Payload() message: any) {
     const event: MinioEvent = message;
-    if (event.Records[0].eventName !== 's3:ObjectCreated:Put') {
+    if (event.Records[0].eventName !== 's3:ObjectCreated:Post') {
       return;
     }
 
@@ -36,30 +36,4 @@ export class VideoUploadConsumer {
       key,
     });
   }
-
-  // @EventPattern(KafkaTopic.IMAGE_UPLOAD)
-  // async handleImageUploadMessage(@Payload() message: any) {
-  //   const event: MinioEvent = JSON.parse(message.value.toString());
-  //   console.log(event);
-  //   // Ignore non-s3:ObjectCreated:Put events
-  //   if (event.Records[0].eventName !== 's3:ObjectCreated:Put') {
-  //     return;
-  //   }
-
-  //   const { s3 } = event.Records[0];
-  //   const {
-  //     bucket: { name },
-  //     object: { key },
-  //   } = s3;
-
-  //   if (name != 'image') {
-  //     return;
-  //   }
-
-  //   console.log(`Image uploaded: ${key}`);
-
-  //   await this.validateQueue.add(JobName.VALIDATE, {
-  //     key,
-  //   });
-  // }
 }
