@@ -20,13 +20,17 @@ export class ValidateQueueService {
 
   async validateImage(data: IValidateImageJob): Promise<void> {
     this.logger.debug(`Validating image ${data.key}`);
-    await this.onProgress(data.key);
-    const image_path = await this.storageService.getReadPresignedUrl(data.key);
-    const is_nude = await checkNudity(image_path);
+    const decoded_key = decodeURIComponent(data.key);
+    await this.onProgress(decoded_key);
+    const image_path =
+      await this.storageService.getReadPresignedUrl(decoded_key);
+    const decoded_image_path = decodeURIComponent(image_path);
+    console.log({ decoded_image_path, image_path });
+    const is_nude = await checkNudity(decoded_image_path);
     if (is_nude) {
-      this.onError(data.key, 'Nude image detected');
+      this.onError(decoded_key, 'Nude image detected');
     }
-    await this.onCompleted(data.key);
+    await this.onCompleted(decoded_key);
   }
 
   private async onProgress(key: string): Promise<void> {

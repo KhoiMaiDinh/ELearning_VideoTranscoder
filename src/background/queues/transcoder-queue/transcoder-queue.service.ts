@@ -15,18 +15,19 @@ export class TranscoderQueueService {
 
   async transcodeVideo(data: ITranscodeJob): Promise<void> {
     this.logger.debug(`Transcoding video ${data.key}`);
-    await this.onProgress(data.key);
+    const decoded_key = decodeURIComponent(data.key);
+    await this.onProgress(decoded_key);
 
-    const command = this.buildCommand(data.key);
+    const command = this.buildCommand(decoded_key);
     const { stdout, stderr } = await execPromise(command);
 
     if (stderr) {
-      await this.onError(data.key, stderr);
+      await this.onError(decoded_key, stderr);
       throw new Error(stderr);
     }
 
     this.logger.log(`Transcoding job executed: ${stdout}`);
-    await this.onCompleted(data.key);
+    await this.onCompleted(decoded_key);
   }
 
   private buildCommand(key: string): string {
