@@ -4,6 +4,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { QueueName, QueuePrefix } from '@/constants';
 import { VideoUploadConsumer } from './video-upload.consumer';
 import { ImageUploadConsumer } from './image-upload.consumer';
+import { DocumentUploadConsumer } from './document-upload.consumer';
 
 @Module({
   imports: [
@@ -29,6 +30,10 @@ import { ImageUploadConsumer } from './image-upload.consumer';
       },
     ),
   ],
-  controllers: [VideoUploadConsumer, ImageUploadConsumer],
+  controllers: [
+    VideoUploadConsumer,
+    ImageUploadConsumer,
+    DocumentUploadConsumer,
+  ],
 })
 export class ConsumerModule {}
