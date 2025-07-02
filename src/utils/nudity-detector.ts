@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 // import path from 'path';
 import { Logger } from '@nestjs/common';
 import * as tf from '@tensorflow/tfjs-node';
