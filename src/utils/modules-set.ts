@@ -11,6 +11,7 @@ import { KafkaModule } from '@/kafka';
 import kafkaConfig from 'src/kafka/config/kafka.config';
 import { ConsumerModule } from 'src/consumers/consumer.module';
 import minioConfig from 'src/libs/minio/config/minio.config';
+import { ApiModule } from 'src/api/api.module';
 
 function generateModulesSet(): ModuleMetadata['imports'] {
   const imports: ModuleMetadata['imports'] = [
@@ -50,6 +51,7 @@ function generateModulesSet(): ModuleMetadata['imports'] {
   });
 
   customModules = [
+    ApiModule,
     bullModule,
     loggerModule,
     BackgroundModule,
