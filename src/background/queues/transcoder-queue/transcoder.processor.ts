@@ -6,7 +6,7 @@ import { TranscoderQueueService } from './transcoder-queue.service';
 import { ITranscodeJob } from './job.interface';
 
 @Processor(QueueName.TRANSCODER, {
-  concurrency: 1,
+  concurrency: 30,
   drainDelay: 300,
   stalledInterval: 300000,
   removeOnComplete: {
@@ -14,7 +14,7 @@ import { ITranscodeJob } from './job.interface';
     count: 100,
   },
   limiter: {
-    max: 1,
+    max: 30,
     duration: 150,
   },
 })

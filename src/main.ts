@@ -12,10 +12,14 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
+        clientId: configService.getOrThrow('kafka.clientId', { infer: true }),
         brokers: configService.getOrThrow('kafka.brokers', { infer: true }),
       },
       consumer: {
         groupId: configService.getOrThrow('kafka.groupId', { infer: true }),
+      },
+      subscribe: {
+        fromBeginning: true,
       },
     },
   });

@@ -22,5 +22,6 @@ import { TranscoderProcessor } from './transcoder.processor';
     TranscoderProcessor,
     TranscoderQueueEvents,
   ],
+  exports: [TranscoderQueueService],
 })
 export class TranscoderQueueModule {}
