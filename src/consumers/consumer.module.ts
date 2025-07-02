@@ -5,10 +5,12 @@ import { QueueName, QueuePrefix } from '@/constants';
 import { VideoUploadConsumer } from './video-upload.consumer';
 import { ImageUploadConsumer } from './image-upload.consumer';
 import { DocumentUploadConsumer } from './document-upload.consumer';
+import { TranscoderQueueModule } from 'src/background/queues/transcoder-queue/transcoder-queue.module';
 
 @Module({
   imports: [
     KafkaModule,
+    TranscoderQueueModule,
     BullModule.registerQueue(
       {
         name: QueueName.TRANSCODER,

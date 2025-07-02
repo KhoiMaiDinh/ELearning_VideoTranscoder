@@ -3,6 +3,7 @@ import validateConfig from '@/utils/validate-config';
 import { registerAs } from '@nestjs/config';
 import { IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
 import { MinioConfig } from './minio-config.type';
+
 class EnvironmentVariablesValidator {
   @IsString()
   @IsNotEmpty()
@@ -29,6 +30,18 @@ class EnvironmentVariablesValidator {
   @IsString()
   @IsNotEmpty()
   STORAGE_URL_EXPIRES_IN: string;
+
+  @IsString()
+  @IsNotEmpty()
+  S3_ENDPOINT: string;
+
+  @IsString()
+  @IsNotEmpty()
+  S3_REGION: string;
+
+  @IsString()
+  @IsNotEmpty()
+  TRANSCODE_JOB_IMAGE: string;
 }
 
 export default registerAs<MinioConfig>('storage', () => {
@@ -46,5 +59,8 @@ export default registerAs<MinioConfig>('storage', () => {
     port,
     bucket: process.env.STORAGE_BUCKET,
     presigned_url_expires: process.env.STORAGE_URL_EXPIRES_IN,
+    s3_endpoint: process.env.S3_ENDPOINT,
+    s3_region: process.env.S3_REGION,
+    transcode_job_image: process.env.TRANSCODE_JOB_IMAGE,
   };
 });

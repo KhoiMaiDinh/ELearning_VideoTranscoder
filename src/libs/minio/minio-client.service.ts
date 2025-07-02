@@ -23,28 +23,18 @@ export class MinioClientService implements OnModuleInit {
   }
 
   public async onModuleInit(): Promise<void> {
-    this.logger.log('MinioClient initialized');
-    await this.createBucket(this.image_bucket);
+    this.logger.log('Initializing MinioClient...');
+    await this.checkClientAvailable();
   }
 
-  private async createBucket(name: string): Promise<void> {
-    const is_bucket_existed = await this.client.bucketExists(this.image_bucket);
-    if (!is_bucket_existed) {
-      await this.client.makeBucket(this.image_bucket);
-      const policy = `
-        {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": "*",
-              "Action": "s3:GetObject",
-              "Resource": "arn:aws:s3:::${name}/*"
-            }
-          ]
-        }
-      `;
-      await this.client.setBucketPolicy(this.image_bucket, policy);
+  private async checkClientAvailable(): Promise<void> {
+    try {
+      const result = await this.client.listBuckets();
+      this.logger.log('MinioClient connection successful');
+      this.logger.debug('Available buckets:', result);
+    } catch (error) {
+      this.logger.error('Failed to connect to MinioClient:', error);
+      throw error;
     }
   }
 

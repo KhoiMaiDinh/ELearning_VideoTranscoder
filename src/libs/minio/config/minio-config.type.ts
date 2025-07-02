@@ -5,4 +5,7 @@ export type MinioConfig = {
   secret_key: string;
   bucket: string;
   presigned_url_expires: string;
+  s3_endpoint: string;
+  s3_region: string;
+  transcode_job_image: string;
 };
