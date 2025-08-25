@@ -143,7 +143,7 @@ export class TranscoderQueueService {
     const secret_key = this.configService.getOrThrow('storage.secret_key', {
       infer: true,
     });
-    return `sudo docker run --rm ${!this.isProduction ? '--network=local_default' : ''} -e KEY=${key} -e S3_ENDPOINT=${s3Endpoint} -e S3_REGION=${s3Region} -e S3_ACCESS_KEY_ID=${access_key} -e S3_SECRET_ACCESS_KEY=${secret_key} --name ${containerName} ${transcodeJobImage}`;
+    return `${this.isProduction ? 'sudo ' : ''}docker run --rm ${!this.isProduction ? '--network=local_default' : ''} -e KEY=${key} -e S3_ENDPOINT=${s3Endpoint} -e S3_REGION=${s3Region} -e S3_ACCESS_KEY_ID=${access_key} -e S3_SECRET_ACCESS_KEY=${secret_key} --name ${containerName} ${transcodeJobImage}`;
   }
 
   async onProgress(key: string): Promise<void> {

@@ -24,7 +24,7 @@ export class MinioClientService implements OnModuleInit {
 
   public async onModuleInit(): Promise<void> {
     this.logger.log('Initializing MinioClient...');
-    await this.checkClientAvailable();
+    // await this.checkClientAvailable();
   }
 
   private async checkClientAvailable(): Promise<void> {
